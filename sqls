@@ -1,0 +1,53 @@
+CREATE TABLE Systems (
+  system_id INT PRIMARY KEY AUTO_INCREMENT,
+  system_name VARCHAR(255),
+  create_date DATETIME DEFAULT GETDATE(),
+  create_user VARCHAR(255) DEFAULT USER_NAME(),
+  update_date DATETIME DEFAULT GETDATE(),
+  update_user VARCHAR(255) DEFAULT USER_NAME()
+);
+
+CREATE TABLE Services (
+  service_id INT PRIMARY KEY AUTO_INCREMENT,
+  service_name VARCHAR(255),
+  service_status BOOLEAN,
+  create_date DATETIME DEFAULT GETDATE(),
+  create_user VARCHAR(255) DEFAULT USER_NAME(),
+  update_date DATETIME DEFAULT GETDATE(),
+  update_user VARCHAR(255) DEFAULT USER_NAME()
+);
+
+CREATE TABLE SubPrograms (
+  subprogram_id INT PRIMARY KEY AUTO_INCREMENT,
+  subprogram_name VARCHAR(255),
+  system_id INT,
+  create_date DATETIME DEFAULT GETDATE(),
+  create_user VARCHAR(255) DEFAULT USER_NAME(),
+  update_date DATETIME DEFAULT GETDATE(),
+  update_user VARCHAR(255) DEFAULT USER_NAME(),
+  FOREIGN KEY (system_id) REFERENCES Systems(system_id)
+);
+
+CREATE TABLE Errors (
+  error_id INT PRIMARY KEY AUTO_INCREMENT,
+  error_message VARCHAR(255),
+  error_timestamp DATETIME,
+  subprogram_id INT,
+  create_date DATETIME DEFAULT GETDATE(),
+  create_user VARCHAR(255) DEFAULT USER_NAME(),
+  update_date DATETIME DEFAULT GETDATE(),
+  update_user VARCHAR(255) DEFAULT USER_NAME(),
+  FOREIGN KEY (subprogram_id) REFERENCES SubPrograms(subprogram_id)
+);
+
+CREATE TABLE Logs (
+  log_id INT PRIMARY KEY AUTO_INCREMENT,
+  log_message VARCHAR(255),
+  log_timestamp DATETIME,
+  error_id INT,
+  create_date DATETIME DEFAULT GETDATE(),
+  create_user VARCHAR(255) DEFAULT USER_NAME(),
+  update_date DATETIME DEFAULT GETDATE(),
+  update_user VARCHAR(255) DEFAULT USER_NAME(),
+  FOREIGN KEY (error_id) REFERENCES Errors(error_id)
+);
