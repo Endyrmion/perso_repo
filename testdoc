@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onglets avec bandeau vert</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .tabs-container {
+    background-color: #4CAF50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+  }
+
+  .tab {
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .tab:hover {
+    background-color: #45a049;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  #tab1-content {
+    display: none;
+  }
+
+  #tab1:checked ~ #tab1-content {
+    display: block;
+  }
+
+  #tab2:checked ~ #tab2-content {
+    display: block;
+  }
+
+  #tab2-content {
+    display: none;
+  }
+</style>
+</head>
+<body>
+  <div class="tabs-container">
+    <label for="tab1" class="tab">Onglet 1</label>
+    <label for="tab2" class="tab">Onglet 2</label>
+  </div>
+
+  <div class="content">
+    <input type="radio" id="tab1" name="tabs" checked>
+    <div id="tab1-content">
+      Contenu de l'onglet 1. <a href="#tab2">Aller à l'onglet 2</a>
+    </div>
+  
+    <input type="radio" id="tab2" name="tabs">
+    <div id="tab2-content">
+      Contenu de l'onglet 2. <a href="#tab1">Aller à l'onglet 1</a>
+    </div>
+  </div>
+</body>
+</html>
