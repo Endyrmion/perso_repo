@@ -1,0 +1,230 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import numpy as np
+
+# Load your dataset
+data = pd.read_csv('transactions.csv')
+
+# Prepare the data
+X = data['clues']
+y = data['narrative']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the model
+model = Pipeline([
+    ('tfidf', TfidfVectorizer()),
+    ('clf', LogisticRegression())
+])
+model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+report = classification_report(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+
+print('Accuracy:', accuracy)
+print(report)
+
+# Visualize the confusion matrix
+plt.figure(figsize=(10, 7))
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=model.classes_, yticklabels=model.classes_)
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('Confusion Matrix')
+plt.show()
+
+# Visualize the distribution of prediction probabilities
+plt.figure(figsize=(10, 7))
+for i, class_name in enumerate(model.classes_):
+    sns.histplot(y_prob[:, i], kde=True, label=class_name, bins=30)
+plt.xlabel('Probability')
+plt.ylabel('Frequency')
+plt.title('Distribution of Prediction Probabilities')
+plt.legend()
+plt.show()
+
+# Predict new transactions
+new_transactions = ["Example clue text for a new transaction"]
+new_predictions = model.predict(new_transactions)
+new_probabilities = model.predict_proba(new_transactions)
+
+for i, transaction in enumerate(new_transactions):
+    print(f"Transaction: {transaction}")
+    print(f"Predicted Narrative: {new_predictions[i]} with probability {max(new_probabilities[i]) * 100:.2f}%")
+
+
+
+
+
+
+
+
+
+
+####
+####
+####
+####
+####
+####
+####
+####
+####
+####
+####
+####
+####
+####
+####
+####
+####
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.svm import SVC
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import numpy as np
+
+# Load your dataset
+data = pd.read_csv('transactions.csv')
+
+# Prepare the data
+X = data['clues']
+y = data['narrative']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the model
+model = Pipeline([
+    ('tfidf', TfidfVectorizer()),
+    ('clf', SVC(probability=True))
+])
+model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+report = classification_report(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+
+print('Accuracy:', accuracy)
+print(report)
+
+# Visualize the confusion matrix
+plt.figure(figsize=(10, 7))
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=model.classes_, yticklabels=model.classes_)
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('Confusion Matrix')
+plt.show()
+
+# Visualize the distribution of prediction probabilities
+plt.figure(figsize=(10, 7))
+for i, class_name in enumerate(model.classes_):
+    sns.histplot(y_prob[:, i], kde=True, label=class_name, bins=30)
+plt.xlabel('Probability')
+plt.ylabel('Frequency')
+plt.title('Distribution of Prediction Probabilities')
+plt.legend()
+plt.show()
+
+# Predict new transactions
+new_transactions = ["Example clue text for a new transaction"]
+new_predictions = model.predict(new_transactions)
+new_probabilities = model.predict_proba(new_transactions)
+
+for i, transaction in enumerate(new_transactions):
+    print(f"Transaction: {transaction}")
+    print(f"Predicted Narrative: {new_predictions[i]} with probability {max(new_probabilities[i]) * 100:.2f}%")
+
+
+
+
+####
+
+
+
+
+##############
+
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import numpy as np
+
+# Load your dataset
+data = pd.read_csv('transactions.csv')
+
+# Prepare the data
+X = data['clues']
+y = data['narrative']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train the model
+model = Pipeline([
+    ('tfidf', TfidfVectorizer()),
+    ('clf', RandomForestClassifier())
+])
+model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+y_prob = model.predict_proba(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+report = classification_report(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+
+print('Accuracy:', accuracy)
+print(report)
+
+# Visualize the confusion matrix
+plt.figure(figsize=(10, 7))
+sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', xticklabels=model.classes_, yticklabels=model.classes_)
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+plt.title('Confusion Matrix')
+plt.show()
+
+# Visualize the distribution of prediction probabilities
+plt.figure(figsize=(10, 7))
+for i, class_name in enumerate(model.classes_):
+    sns.histplot(y_prob[:, i], kde=True, label=class_name, bins=30)
+plt.xlabel('Probability')
+plt.ylabel('Frequency')
+plt.title('Distribution of Prediction Probabilities')
+plt.legend()
+plt.show()
+
+# Predict new transactions
+new_transactions = ["Example clue text for a new transaction"]
+new_predictions = model.predict(new_transactions)
+new_probabilities = model.predict_proba(new_transactions)
+
+for i, transaction in enumerate(new_transactions):
+    print(f"Transaction: {transaction}")
+    print(f"Predicted Narrative: {new_predictions[i]} with probability {max(new_probabilities[i]) * 100:.2f}%")
